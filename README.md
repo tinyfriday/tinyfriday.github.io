@@ -2,7 +2,7 @@
 
 매주 금요일, 작은 도구 하나를 내는 프로젝트의 허브입니다. by 계산해봄 / 만든 사람: 계달희
 
-**보기:** https://tinyfriday.github.io · **의견:** [이슈 남기기](https://github.com/tinyfriday/tinyfriday.github.io/issues/new/choose) · 버전 `v0.1 (실험적)`
+**보기:** https://tinyfriday.github.io · **의견:** [의견 남기기](https://realoil.notion.site/7ed477dffe6746de9c07e983cb66922e) (개발자는 [이슈](https://github.com/tinyfriday/tinyfriday.github.io/issues/new/choose)) · 버전 `v0.1 (실험적)`
 
 ## 무엇을 하나
 
