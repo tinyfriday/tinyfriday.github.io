@@ -1,0 +1,23 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm install --no-audit --no-fund
+      - run: npx playwright install --with-deps chromium webkit
+      - run: npx playwright test
+      - name: tools.json 형식 검사
+        run: node -e "const d=require('./tools.json'); if(!Array.isArray(d.tools)) throw new Error('tools 배열 없음'); for (const t of d.tools) for (const k of ['id','name','summary','released','version','status']) if(!t[k]) throw new Error(t.id+': '+k+' 없음'); console.log('ok', d.tools.length)"

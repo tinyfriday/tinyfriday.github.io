@@ -1,0 +1,19 @@
+name: 피드백
+description: 써 보고 든 생각, 불편한 점, 바라는 점
+labels: [피드백]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: 무엇을 하려고 했나요?
+    validations:
+      required: true
+  - type: textarea
+    id: result
+    attributes:
+      label: 어떻게 됐나요? (기대와 다른 점)
+  - type: input
+    id: device
+    attributes:
+      label: 기기·브라우저 (선택)
+      placeholder: 예) 아이폰 사파리, 갤럭시 크롬

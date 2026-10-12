@@ -1,0 +1,12 @@
+{
+  "name": "tinyfriday-hub",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "test": "playwright test",
+    "serve": "python3 -m http.server 4173"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.56.0"
+  }
+}
