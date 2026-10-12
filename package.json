@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.1.0",
   "scripts": {
-    "test": "playwright test",
+    "test": "node scripts/check-tools.js && playwright test",
     "serve": "python3 -m http.server 4173"
   },
   "devDependencies": {
