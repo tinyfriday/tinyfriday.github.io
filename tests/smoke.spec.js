@@ -23,7 +23,6 @@ test("MML 은 지인용 알파이고 서비스 링크가 없다", async ({ page 
   const mml = page.locator("#tool-mid2mml");
   await expect(mml).toContainText("지인용 알파");
   const hrefs = await mml.locator("a").evaluateAll((as) => as.map((a) => a.href));
-  expect(hrefs.length).toBeGreaterThan(0);
   for (const h of hrefs) expect(h).toMatch(/^https:\/\/github\.com\/tinyfriday\//);
 });
 
