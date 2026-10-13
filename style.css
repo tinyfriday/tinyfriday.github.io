@@ -1,11 +1,12 @@
-/* 배포해봄 허브 — 모눈종이 노트 위의 한 주. 금요일 칸만 형광펜. */
+/* 배포해봄 허브 — 모눈종이 노트 위의 한 주. 금요일 칸은 계달희 목도리 주황. */
 :root {
   --paper: #FBFCFE;
   --grid: #E1E9F5;
   --grid-strong: #C9D7EC;
   --ink: #1B2A4A;
   --ink-soft: #4A5A7A;
-  --marker: #FFE066;
+  --marker: #FF9A5C;
+  --scarf: #F2611C;
   --pencil: #7A5230;
   --focus: #2F6FEB;
   --cell: 28px;
@@ -19,7 +20,8 @@
     --grid-strong: #27406B;
     --ink: #E8EEF8;
     --ink-soft: #A9B6CE;
-    --marker: #F2C94C;
+    --marker: #F08A4E;
+    --scarf: #FF7A3D;
     --pencil: #D9B28A;
     --focus: #8DB4FF;
   }
@@ -54,7 +56,7 @@ a:hover { text-decoration-color: var(--ink); }
 .brand span { color: var(--ink-soft); font-weight: 500; margin-left: .25rem; }
 .by { margin: 0; color: var(--pencil); font-size: .9375rem; }
 
-.hero { padding: 4.5rem 0 3rem; }
+.hero { padding: 3.5rem 0 3rem; }
 h1 {
   margin: 0;
   font-size: clamp(2.5rem, 9vw, 4.25rem);
@@ -65,7 +67,6 @@ h1 {
 .lede { max-width: var(--measure); margin: 1.25rem 0 2.5rem; color: var(--ink-soft); font-size: 1.125rem; }
 
 /* 한 주: 칸 7개. 금요일 칸은 형광펜, 오늘 칸은 연필 테두리 */
-.week { margin: 0; }
 .days {
   list-style: none; margin: 0; padding: 0;
   display: grid; grid-template-columns: repeat(7, 1fr);
@@ -88,8 +89,6 @@ h1 {
   border: 2px dashed var(--pencil); border-radius: 50%;
   pointer-events: none;
 }
-.week figcaption { margin-top: .875rem; color: var(--ink-soft); font-size: .9375rem; }
-.week figcaption strong { color: var(--ink); }
 
 h2 { font-size: 1.375rem; font-weight: 800; letter-spacing: -0.01em; margin: 0 0 1.25rem; }
 
@@ -116,7 +115,7 @@ h2 { font-size: 1.375rem; font-weight: 800; letter-spacing: -0.01em; margin: 0 0
 .how { padding: 2rem 0 3rem; }
 .how p { max-width: var(--measure); margin: 0 0 1rem; background: var(--paper); }
 .how em { font-style: normal; font-weight: 700; box-shadow: inset 0 -.45em 0 var(--marker); }
-@media (prefers-color-scheme: dark) { .how em { color: var(--ink); box-shadow: inset 0 -.45em 0 rgba(242, 201, 76, .35); } }
+@media (prefers-color-scheme: dark) { .how em { color: var(--ink); box-shadow: inset 0 -.45em 0 rgba(240, 138, 78, .4); } }
 
 .foot { padding-top: 1.5rem; padding-bottom: 3rem; border-top: 2px solid var(--ink); font-size: .9375rem; }
 .foot .links { list-style: none; margin: 0 0 1rem; padding: 0; display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; }
@@ -143,3 +142,30 @@ h2 { font-size: 1.375rem; font-weight: 800; letter-spacing: -0.01em; margin: 0 0
   padding: .1rem .45rem; cursor: pointer;
 }
 .lang:hover { background: var(--marker); color: #1B2A4A; }
+
+/* 첫 화면: 왼쪽 글, 오른쪽 계달희와 말풍선 */
+.hero-top { display: grid; grid-template-columns: 1fr auto; gap: 1rem 1.5rem; align-items: end; margin-bottom: 2rem; }
+.hero-text .lede { margin-bottom: 0; }
+.dalhee { margin: 0; display: flex; flex-direction: column; align-items: center; width: 13rem; }
+.dalhee img { width: 11rem; height: auto; display: block; order: 2; }
+.bubble {
+  order: 1; position: relative; margin: 0 0 .75rem;
+  background: var(--paper); color: var(--ink);
+  border: 2px solid var(--ink); border-radius: 14px;
+  padding: .6rem .8rem; font-size: .9375rem; line-height: 1.5;
+}
+.bubble::after {
+  content: ""; position: absolute; left: 50%; bottom: -9px; width: 14px; height: 14px;
+  background: var(--paper); border-right: 2px solid var(--ink); border-bottom: 2px solid var(--ink);
+  transform: translateX(-50%) rotate(45deg);
+}
+.bubble strong { color: var(--scarf); }
+.stats { display: flex; flex-wrap: wrap; gap: .5rem 1.25rem; margin: .875rem 0 0; font-size: .9375rem; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+.stats .stat:first-child { color: var(--ink); font-weight: 700; }
+@media (max-width: 30rem) {
+  .hero-top { grid-template-columns: 1fr; }
+  .dalhee { width: auto; flex-direction: row; align-items: center; gap: .75rem; }
+  .dalhee img { width: 7rem; order: 1; }
+  .bubble { order: 2; margin: 0; }
+  .bubble::after { left: -9px; top: 50%; bottom: auto; transform: translateY(-50%) rotate(135deg); }
+}

@@ -36,7 +36,7 @@ test("가로 스크롤이 생기지 않는다", async ({ page }) => {
 test("목록을 못 불러오면 안내한다", async ({ page }) => {
   await page.route("**/tools.json", (r) => r.fulfill({ status: 500, body: "" }));
   await page.goto("/");
-  await expect(page.locator("#log")).toContainText("불러오지 못했습니다");
+  await expect(page.locator("#log")).toContainText("못 찾았어요");
 });
 
 test("영어로 바꾸면 문구와 도구 목록이 영어가 되고, 선택이 유지된다", async ({ page }) => {

@@ -10,38 +10,42 @@
       lede: "토요일에 정하고, 금요일에 냅니다. 덜 된 부분은 숨기지 않고 적어서 냅니다.",
       d6: "토", t6: "정하기", d0: "일", t0: "만들기", d1: "월", t1: "시험", d2: "화", t2: "시험",
       d3: "수", t3: "시험", d4: "목", t4: "써 보기", d5: "금", t5: "공개",
-      cap_pre: "이번 주에는 ", cap_post: "를 만들고 있습니다.",
+      cap_pre: "이번 주엔 ", cap_post: "를 만들어요.",
+      dalhee_alt: "노트북을 든 수달 계달희", days_label: "이번 주",
+      stat_friday: "{n}번째 금요일", stat_shipped: "도구 {k}개 출시",
       tools_title: "지금까지 낸 도구", loading: "도구 목록을 불러오는 중입니다.",
       how_title: "이렇게 만듭니다",
       how1: "한 주에 하나씩, 서버 없이 브라우저에서 돌아가는 도구를 만듭니다. 대부분의 구현은 AI가 맡고, 무엇을 만들지와 출시 판단은 사람이 합니다.",
       how2a: "완벽해질 때까지 기다리지 않습니다. 대신 도구마다 ", how2em: "무엇이 안 되는지", how2b: "를 먼저 적어 둡니다.",
-      log_link: "만든 기록 보기", feedback: "의견 남기기",
-      meta1: "만든 사람 계달희. 이 페이지는 허브 v0.1(실험적)입니다.", limits: "알려진 한계 보기",
+      log_link: "Build Log", feedback: "의견 남기기",
+      meta1: "만든 사람 계달희, 금요일마다 뭔가 내놓는 수달. 이 페이지는 허브 v0.1(실험적)입니다.", limits: "알려진 한계 보기",
       privacy: "방문 수는 GoatCounter로 셉니다. 쿠키를 쓰지 않고, 누구인지 알 수 있는 정보는 모으지 않습니다.",
-      soon: "공개 예정 ", left: "공개까지 {n}일 남았습니다.", tomorrow: "내일 저녁에 공개합니다.",
-      today: "오늘 저녁에 공개합니다.", shipped: "{d}에 공개했습니다.",
-      empty: "아직 낸 도구가 없습니다. 첫 도구는 금요일에 나옵니다.",
-      fail: "도구 목록을 불러오지 못했습니다. 새로고침하거나 ", fail_link: "목록 원본", fail_end: "을 열어 보세요.",
+      soon: "공개 예정 ", left: "공개까지 {n}일 남았어요.", tomorrow: "내일 저녁에 공개해요.",
+      today: "오늘 저녁에 공개해요.", shipped: "{d}에 공개했어요.",
+      empty: "아직 낸 도구가 없어요. 첫 도구는 금요일에 나와요.",
+      fail: "달희가 도구 목록을 못 찾았어요. 새로고침하거나 ", fail_link: "목록 원본", fail_end: "을 열어 보세요.",
       switch_to: "Switch to English", switch_label: "EN"
     },
     en: {
-      skip: "Skip to the tool list", by: "by 계산해봄 (Calculated This)",
+      skip: "Skip to the tool list", by: "by 계산해봄",
       h1a: "Every Friday,", h1b: "one small tool.",
       lede: "Picked on Saturday, shipped on Friday. What doesn't work yet is written down, not hidden.",
       d6: "Sat", t6: "Pick", d0: "Sun", t0: "Build", d1: "Mon", t1: "Test", d2: "Tue", t2: "Test",
       d3: "Wed", t3: "Test", d4: "Thu", t4: "Try", d5: "Fri", t5: "Ship",
       cap_pre: "This week I'm building ", cap_post: ".",
+      dalhee_alt: "Dalhee the otter, holding a laptop", days_label: "This week",
+      stat_friday: "Friday #{n}", stat_shipped: "{k} tools shipped", stat_shipped1: "1 tool shipped",
       tools_title: "Shipped so far", loading: "Loading the tool list…",
       how_title: "How it's made",
       how1: "One tool a week, running in your browser with no server. AI writes most of the code; a human decides what to build and when it ships.",
       how2a: "Nothing waits to be perfect. Instead, every tool starts by listing ", how2em: "what doesn't work yet", how2b: ".",
-      log_link: "Build log", feedback: "Send feedback",
-      meta1: "Made by 계달희 (Dalhee). This page is hub v0.1 (experimental).", limits: "Known limitations",
+      log_link: "Build Log", feedback: "Send feedback",
+      meta1: "Made by 계달희 (Dalhee), an otter who ships on Fridays. This page is hub v0.1 (experimental).", limits: "Known limitations",
       privacy: "Visits are counted with GoatCounter: no cookies, nothing that identifies you.",
       soon: "Coming ", left: "Ships in {n} days.", tomorrow: "Ships tomorrow evening.",
       today: "Ships this evening.", shipped: "Shipped on {d}.",
       empty: "Nothing shipped yet. The first tool lands on Friday.",
-      fail: "Couldn't load the tool list. Refresh, or open the ", fail_link: "raw list", fail_end: ".",
+      fail: "Dalhee couldn't find the tool list. Refresh, or open the ", fail_link: "raw list", fail_end: ".",
       switch_to: "한국어로 보기", switch_label: "KO"
     }
   };
@@ -115,6 +119,8 @@
       var v = T(n.getAttribute("data-i18n"));
       if (v != null) n.textContent = v;
     });
+    document.querySelectorAll("[data-i18n-alt]").forEach(function (n) { n.alt = T(n.getAttribute("data-i18n-alt")); });
+    document.getElementById("days").setAttribute("aria-label", T("days_label"));
     var b = document.getElementById("lang-toggle");
     b.textContent = T("switch_label");
     b.setAttribute("aria-label", T("switch_to"));
@@ -130,6 +136,18 @@
       : left === 0 ? T("today")
       : T("shipped").replace("{d}", formatDate(s.release));
     document.getElementById("countdown").textContent = msg;
+  }
+
+  function renderStats(d) {
+    var p = document.getElementById("stats");
+    p.textContent = "";
+    if (!d || !d.series_start || !d.sprint) return;
+    var s = d.series_start.split("-").map(Number), r = d.sprint.release.split("-").map(Number);
+    var n = Math.floor((Date.UTC(r[0], r[1] - 1, r[2]) - Date.UTC(s[0], s[1] - 1, s[2])) / 604800000) + 1;
+    var now = todayIso();
+    var k = (d.tools || []).filter(function (t) { return t.released <= now; }).length;
+    p.appendChild(el("span", "stat", T("stat_friday").replace("{n}", n)));
+    p.appendChild(el("span", "stat", (k === 1 && I18N[lang].stat_shipped1) ? I18N[lang].stat_shipped1 : T("stat_shipped").replace("{k}", k)));
   }
 
   function renderTools(tools) {
@@ -179,7 +197,7 @@
 
   function render() {
     applyStatic();
-    if (data) { renderSprint(data.sprint); renderTools(data.tools || []); }
+    if (data) { renderSprint(data.sprint); renderStats(data); renderTools(data.tools || []); }
   }
 
   document.getElementById("lang-toggle").addEventListener("click", function () {

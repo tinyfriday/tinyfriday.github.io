@@ -10,7 +10,7 @@
   <meta name="description" content="매주 금요일, 작은 도구 하나를 내는 배포해봄(TinyFriday)의 허브입니다. by 계산해봄">
   <meta property="og:title" content="배포해봄 · TinyFriday">
   <meta property="og:description" content="매주 금요일, 작은 도구 하나.">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%231B2A4A'/%3E%3Ctext x='16' y='22' font-size='16' text-anchor='middle' fill='%23FFE066' font-family='sans-serif' font-weight='700'%3E금%3C/text%3E%3C/svg%3E">
+  <link rel="icon" href="img/favicon.png" type="image/png">
   <link rel="stylesheet" href="style.css">
   <script defer src="app.js"></script>
   <script data-goatcounter="https://tinyfriday.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
@@ -24,21 +24,27 @@
 
   <main>
     <section class="hero" aria-labelledby="hero-title">
-      <h1 id="hero-title"><span data-i18n="h1a">매주 금요일,</span><br><span data-i18n="h1b">작은 도구 하나.</span></h1>
-      <p class="lede" data-i18n="lede">토요일에 정하고, 금요일에 냅니다. 덜 된 부분은 숨기지 않고 적어서 냅니다.</p>
+      <div class="hero-top">
+        <div class="hero-text">
+          <h1 id="hero-title"><span data-i18n="h1a">매주 금요일,</span><br><span data-i18n="h1b">작은 도구 하나.</span></h1>
+          <p class="lede" data-i18n="lede">토요일에 정하고, 금요일에 냅니다. 덜 된 부분은 숨기지 않고 적어서 냅니다.</p>
+        </div>
+        <figure class="dalhee">
+          <img src="img/dalhee.webp" width="252" height="280" alt="" data-i18n-alt="dalhee_alt">
+          <figcaption class="bubble" id="week-cap"><span data-i18n="cap_pre">이번 주엔 </span><strong id="now-making">허브</strong><span data-i18n="cap_post">를 만들어요.</span> <span id="countdown">금요일 저녁에 공개해요.</span></figcaption>
+        </figure>
+      </div>
 
-      <figure class="week" aria-labelledby="week-cap">
-        <ol class="days" id="days">
-          <li data-dow="6"><span class="d" data-i18n="d6">토</span><span class="t" data-i18n="t6">정하기</span></li>
-          <li data-dow="0"><span class="d" data-i18n="d0">일</span><span class="t" data-i18n="t0">만들기</span></li>
-          <li data-dow="1"><span class="d" data-i18n="d1">월</span><span class="t" data-i18n="t1">시험</span></li>
-          <li data-dow="2"><span class="d" data-i18n="d2">화</span><span class="t" data-i18n="t2">시험</span></li>
-          <li data-dow="3"><span class="d" data-i18n="d3">수</span><span class="t" data-i18n="t3">시험</span></li>
-          <li data-dow="4"><span class="d" data-i18n="d4">목</span><span class="t" data-i18n="t4">써 보기</span></li>
-          <li data-dow="5" class="fri"><span class="d" data-i18n="d5">금</span><span class="t" data-i18n="t5">공개</span></li>
-        </ol>
-        <figcaption id="week-cap"><span data-i18n="cap_pre">이번 주에는 </span><strong id="now-making">허브</strong><span data-i18n="cap_post">를 만들고 있습니다.</span> <span id="countdown">금요일 저녁에 공개합니다.</span></figcaption>
-      </figure>
+      <ol class="days" id="days" aria-label="이번 주">
+        <li data-dow="6"><span class="d" data-i18n="d6">토</span><span class="t" data-i18n="t6">정하기</span></li>
+        <li data-dow="0"><span class="d" data-i18n="d0">일</span><span class="t" data-i18n="t0">만들기</span></li>
+        <li data-dow="1"><span class="d" data-i18n="d1">월</span><span class="t" data-i18n="t1">시험</span></li>
+        <li data-dow="2"><span class="d" data-i18n="d2">화</span><span class="t" data-i18n="t2">시험</span></li>
+        <li data-dow="3"><span class="d" data-i18n="d3">수</span><span class="t" data-i18n="t3">시험</span></li>
+        <li data-dow="4"><span class="d" data-i18n="d4">목</span><span class="t" data-i18n="t4">써 보기</span></li>
+        <li data-dow="5" class="fri"><span class="d" data-i18n="d5">금</span><span class="t" data-i18n="t5">공개</span></li>
+      </ol>
+      <p class="stats" id="stats" aria-live="polite"></p>
     </section>
 
     <section id="tools" class="tools" aria-labelledby="tools-title">
