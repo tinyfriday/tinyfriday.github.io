@@ -1,34 +1,98 @@
-// 배포해봄 허브: tools.json 을 읽어 목록을 그리고, 이번 주 칸에 오늘을 표시한다.
+// 배포해봄 허브: tools.json 을 읽어 목록을 그리고, 이번 주 칸에 오늘을 표시한다. 한국어·영어를 지원한다.
 // 외부 입력은 textContent 로만 넣는다(innerHTML 금지).
 (function () {
   "use strict";
+
+  var I18N = {
+    ko: {
+      skip: "도구 목록으로 건너뛰기", by: "by 계산해봄",
+      h1a: "매주 금요일,", h1b: "작은 도구 하나.",
+      lede: "토요일에 정하고, 금요일에 냅니다. 덜 된 부분은 숨기지 않고 적어서 냅니다.",
+      d6: "토", t6: "정하기", d0: "일", t0: "만들기", d1: "월", t1: "시험", d2: "화", t2: "시험",
+      d3: "수", t3: "시험", d4: "목", t4: "써 보기", d5: "금", t5: "공개",
+      cap_pre: "이번 주에는 ", cap_post: "를 만들고 있습니다.",
+      tools_title: "지금까지 낸 도구", loading: "도구 목록을 불러오는 중입니다.",
+      how_title: "이렇게 만듭니다",
+      how1: "한 주에 하나씩, 서버 없이 브라우저에서 돌아가는 도구를 만듭니다. 대부분의 구현은 AI가 맡고, 무엇을 만들지와 출시 판단은 사람이 합니다.",
+      how2a: "완벽해질 때까지 기다리지 않습니다. 대신 도구마다 ", how2em: "무엇이 안 되는지", how2b: "를 먼저 적어 둡니다.",
+      log_link: "만든 기록 보기", feedback: "의견 남기기",
+      meta1: "만든 사람 계달희. 이 페이지는 허브 v0.1(실험적)입니다.", limits: "알려진 한계 보기",
+      privacy: "방문 수는 GoatCounter로 셉니다. 쿠키를 쓰지 않고, 누구인지 알 수 있는 정보는 모으지 않습니다.",
+      soon: "공개 예정 ", left: "공개까지 {n}일 남았습니다.", tomorrow: "내일 저녁에 공개합니다.",
+      today: "오늘 저녁에 공개합니다.", shipped: "{d}에 공개했습니다.",
+      empty: "아직 낸 도구가 없습니다. 첫 도구는 금요일에 나옵니다.",
+      fail: "도구 목록을 불러오지 못했습니다. 새로고침하거나 ", fail_link: "목록 원본", fail_end: "을 열어 보세요.",
+      switch_to: "Switch to English", switch_label: "EN"
+    },
+    en: {
+      skip: "Skip to the tool list", by: "by 계산해봄 (Calculated This)",
+      h1a: "Every Friday,", h1b: "one small tool.",
+      lede: "Picked on Saturday, shipped on Friday. What doesn't work yet is written down, not hidden.",
+      d6: "Sat", t6: "Pick", d0: "Sun", t0: "Build", d1: "Mon", t1: "Test", d2: "Tue", t2: "Test",
+      d3: "Wed", t3: "Test", d4: "Thu", t4: "Try", d5: "Fri", t5: "Ship",
+      cap_pre: "This week I'm building ", cap_post: ".",
+      tools_title: "Shipped so far", loading: "Loading the tool list…",
+      how_title: "How it's made",
+      how1: "One tool a week, running in your browser with no server. AI writes most of the code; a human decides what to build and when it ships.",
+      how2a: "Nothing waits to be perfect. Instead, every tool starts by listing ", how2em: "what doesn't work yet", how2b: ".",
+      log_link: "Build log", feedback: "Send feedback",
+      meta1: "Made by 계달희 (Dalhee). This page is hub v0.1 (experimental).", limits: "Known limitations",
+      privacy: "Visits are counted with GoatCounter: no cookies, nothing that identifies you.",
+      soon: "Coming ", left: "Ships in {n} days.", tomorrow: "Ships tomorrow evening.",
+      today: "Ships this evening.", shipped: "Shipped on {d}.",
+      empty: "Nothing shipped yet. The first tool lands on Friday.",
+      fail: "Couldn't load the tool list. Refresh, or open the ", fail_link: "raw list", fail_end: ".",
+      switch_to: "한국어로 보기", switch_label: "KO"
+    }
+  };
+  var MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+  function store(key, val) {
+    try { if (val === undefined) return localStorage.getItem(key); localStorage.setItem(key, val); } catch (e) { return null; }
+  }
+
+  function pickLang() {
+    var q = new URLSearchParams(location.search).get("lang");
+    if (q === "ko" || q === "en") return q;
+    var saved = store("tf-lang");
+    if (saved === "ko" || saved === "en") return saved;
+    return /^ko\b/i.test(navigator.language || "") ? "ko" : "en";
+  }
+
+  var lang = pickLang();
+  var data = null;
+  function T(k) { return I18N[lang][k]; }
 
   // 오늘 요일과 날짜를 한국 시간으로
   function kstNow() {
     var now = new Date();
     return new Date(now.getTime() + (now.getTimezoneOffset() + 540) * 60000);
   }
+  function todayIso() {
+    var t = kstNow();
+    return t.getFullYear() + "-" + String(t.getMonth() + 1).padStart(2, "0") + "-" + String(t.getDate()).padStart(2, "0");
+  }
 
   function markToday() {
-    var dow = kstNow().getDay();
-    var cell = document.querySelector('.days li[data-dow="' + dow + '"]');
-    if (cell) {
-      cell.classList.add("today");
-      cell.setAttribute("aria-current", "date");
-    }
+    var cell = document.querySelector('.days li[data-dow="' + kstNow().getDay() + '"]');
+    if (cell) { cell.classList.add("today"); cell.setAttribute("aria-current", "date"); }
   }
 
   function daysUntil(isoDate) {
     var t = kstNow();
     var today = Date.UTC(t.getFullYear(), t.getMonth(), t.getDate());
     var p = isoDate.split("-").map(Number);
-    var target = Date.UTC(p[0], p[1] - 1, p[2]);
-    return Math.round((target - today) / 86400000);
+    return Math.round((Date.UTC(p[0], p[1] - 1, p[2]) - today) / 86400000);
   }
 
   function formatDate(iso) {
     var p = iso.split("-").map(Number);
-    return p[1] + "월 " + p[2] + "일";
+    return lang === "ko" ? p[1] + "월 " + p[2] + "일" : MONTHS[p[1] - 1] + " " + p[2];
+  }
+
+  // 도구 문구: 영어 칸(name_en 등)이 있으면 영어에서 쓴다
+  function L(obj, key) {
+    return (lang === "en" && obj[key + "_en"]) || obj[key];
   }
 
   function el(tag, cls, text) {
@@ -45,70 +109,89 @@
     } catch (e) { return null; }
   }
 
+  function applyStatic() {
+    document.documentElement.lang = lang;
+    document.querySelectorAll("[data-i18n]").forEach(function (n) {
+      var v = T(n.getAttribute("data-i18n"));
+      if (v != null) n.textContent = v;
+    });
+    var b = document.getElementById("lang-toggle");
+    b.textContent = T("switch_label");
+    b.setAttribute("aria-label", T("switch_to"));
+    b.setAttribute("lang", lang === "ko" ? "en" : "ko");
+  }
+
   function renderSprint(s) {
     if (!s) return;
-    document.getElementById("now-making").textContent = s.name;
+    document.getElementById("now-making").textContent = L(s, "name");
     var left = daysUntil(s.release);
-    var msg = left > 1 ? "공개까지 " + left + "일 남았습니다."
-      : left === 1 ? "내일 저녁에 공개합니다."
-      : left === 0 ? "오늘 저녁에 공개합니다."
-      : formatDate(s.release) + "에 공개했습니다.";
+    var msg = left > 1 ? T("left").replace("{n}", left)
+      : left === 1 ? T("tomorrow")
+      : left === 0 ? T("today")
+      : T("shipped").replace("{d}", formatDate(s.release));
     document.getElementById("countdown").textContent = msg;
   }
 
   function renderTools(tools) {
     var log = document.getElementById("log");
     log.textContent = "";
-    var today = kstNow();
-    var todayIso = today.getFullYear() + "-" + String(today.getMonth() + 1).padStart(2, "0") + "-" + String(today.getDate()).padStart(2, "0");
-    tools
-      .slice()
+    var now = todayIso();
+    tools.slice()
       .sort(function (a, b) { return b.released.localeCompare(a.released); })
       .forEach(function (t) {
         var li = el("li");
         li.id = "tool-" + t.id;
-        var upcoming = t.released > todayIso;
-        li.appendChild(el("p", "when", (upcoming ? "공개 예정 " : "") + formatDate(t.released)));
-
+        li.appendChild(el("p", "when", (t.released > now ? T("soon") : "") + formatDate(t.released)));
         var body = el("div");
-        var h = el("h3", null, t.name);
+        var h = el("h3", null, L(t, "name"));
         h.appendChild(el("span", "ver", t.version));
-        h.appendChild(el("span", "status", t.status));
+        h.appendChild(el("span", "status", L(t, "status")));
         body.appendChild(h);
-        body.appendChild(el("p", null, t.summary));
-
+        body.appendChild(el("p", null, L(t, "summary")));
         var acts = el("ul", "acts");
         (t.links || []).forEach(function (l) {
           var href = safeHref(l.href);
           if (!href) return;
           var item = el("li");
-          var a = el("a", null, l.label);
+          var a = el("a", null, L(l, "label"));
           a.href = href;
           item.appendChild(a);
-          if (l.note) item.appendChild(el("span", "note", "(" + l.note + ")"));
+          if (l.note) item.appendChild(el("span", "note", "(" + L(l, "note") + ")"));
           acts.appendChild(item);
         });
-        body.appendChild(acts);
+        if (acts.childNodes.length) body.appendChild(acts);
         li.appendChild(body);
         log.appendChild(li);
       });
-    if (!tools.length) log.appendChild(el("li", "empty", "아직 낸 도구가 없습니다. 첫 도구는 금요일에 나옵니다."));
+    if (!tools.length) log.appendChild(el("li", "empty", T("empty")));
   }
 
   function fail() {
     var log = document.getElementById("log");
     log.textContent = "";
-    var li = el("li", "empty", "도구 목록을 불러오지 못했습니다. 새로고침하거나 ");
-    var a = el("a", null, "목록 원본");
+    var li = el("li", "empty", T("fail"));
+    var a = el("a", null, T("fail_link"));
     a.href = "tools.json";
     li.appendChild(a);
-    li.appendChild(document.createTextNode("을 열어 보세요."));
+    li.appendChild(document.createTextNode(T("fail_end")));
     log.appendChild(li);
   }
 
+  function render() {
+    applyStatic();
+    if (data) { renderSprint(data.sprint); renderTools(data.tools || []); }
+  }
+
+  document.getElementById("lang-toggle").addEventListener("click", function () {
+    lang = lang === "ko" ? "en" : "ko";
+    store("tf-lang", lang);
+    render();
+  });
+
   markToday();
+  render();
   fetch("tools.json", { cache: "no-cache" })
     .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
-    .then(function (data) { renderSprint(data.sprint); renderTools(data.tools || []); })
+    .then(function (d) { data = d; render(); })
     .catch(fail);
 })();

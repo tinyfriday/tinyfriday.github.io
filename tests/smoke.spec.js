@@ -38,3 +38,19 @@ test("목록을 못 불러오면 안내한다", async ({ page }) => {
   await page.goto("/");
   await expect(page.locator("#log")).toContainText("불러오지 못했습니다");
 });
+
+test("영어로 바꾸면 문구와 도구 목록이 영어가 되고, 선택이 유지된다", async ({ page }) => {
+  await page.goto("/");
+  await page.locator("#tool-hub").waitFor();
+  await page.locator("#lang-toggle").click();
+  await expect(page.locator("html")).toHaveAttribute("lang", "en");
+  await expect(page.getByRole("heading", { level: 1 })).toContainText("Every Friday");
+  await expect(page.locator("#tool-mid2mml")).toContainText("friends-only alpha");
+  await page.reload();
+  await expect(page.getByRole("heading", { level: 1 })).toContainText("Every Friday");
+});
+
+test("?lang=en 주소로 바로 영어를 연다", async ({ page }) => {
+  await page.goto("/?lang=en");
+  await expect(page.getByRole("heading", { level: 2 }).first()).toHaveText("Shipped so far");
+});

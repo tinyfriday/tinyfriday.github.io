@@ -16,54 +16,54 @@
   <script data-goatcounter="https://tinyfriday.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </head>
 <body>
-  <a class="skip" href="#tools">도구 목록으로 건너뛰기</a>
+  <a class="skip" href="#tools" data-i18n="skip">도구 목록으로 건너뛰기</a>
   <header class="top">
     <p class="brand"><strong>배포해봄</strong> <span lang="en">TinyFriday</span></p>
-    <p class="by">by 계산해봄</p>
+    <div class="top-right"><p class="by" data-i18n="by">by 계산해봄</p><button type="button" class="lang" id="lang-toggle" aria-label="Switch to English">EN</button></div>
   </header>
 
   <main>
     <section class="hero" aria-labelledby="hero-title">
-      <h1 id="hero-title">매주 금요일,<br>작은 도구 하나.</h1>
-      <p class="lede">토요일에 정하고, 금요일에 냅니다. 덜 된 부분은 숨기지 않고 적어서 냅니다.</p>
+      <h1 id="hero-title"><span data-i18n="h1a">매주 금요일,</span><br><span data-i18n="h1b">작은 도구 하나.</span></h1>
+      <p class="lede" data-i18n="lede">토요일에 정하고, 금요일에 냅니다. 덜 된 부분은 숨기지 않고 적어서 냅니다.</p>
 
       <figure class="week" aria-labelledby="week-cap">
         <ol class="days" id="days">
-          <li data-dow="6"><span class="d">토</span><span class="t">정하기</span></li>
-          <li data-dow="0"><span class="d">일</span><span class="t">만들기</span></li>
-          <li data-dow="1"><span class="d">월</span><span class="t">시험</span></li>
-          <li data-dow="2"><span class="d">화</span><span class="t">시험</span></li>
-          <li data-dow="3"><span class="d">수</span><span class="t">시험</span></li>
-          <li data-dow="4"><span class="d">목</span><span class="t">써 보기</span></li>
-          <li data-dow="5" class="fri"><span class="d">금</span><span class="t">공개</span></li>
+          <li data-dow="6"><span class="d" data-i18n="d6">토</span><span class="t" data-i18n="t6">정하기</span></li>
+          <li data-dow="0"><span class="d" data-i18n="d0">일</span><span class="t" data-i18n="t0">만들기</span></li>
+          <li data-dow="1"><span class="d" data-i18n="d1">월</span><span class="t" data-i18n="t1">시험</span></li>
+          <li data-dow="2"><span class="d" data-i18n="d2">화</span><span class="t" data-i18n="t2">시험</span></li>
+          <li data-dow="3"><span class="d" data-i18n="d3">수</span><span class="t" data-i18n="t3">시험</span></li>
+          <li data-dow="4"><span class="d" data-i18n="d4">목</span><span class="t" data-i18n="t4">써 보기</span></li>
+          <li data-dow="5" class="fri"><span class="d" data-i18n="d5">금</span><span class="t" data-i18n="t5">공개</span></li>
         </ol>
-        <figcaption id="week-cap">이번 주에는 <strong id="now-making">허브</strong>를 만들고 있습니다. <span id="countdown">금요일 저녁에 공개합니다.</span></figcaption>
+        <figcaption id="week-cap"><span data-i18n="cap_pre">이번 주에는 </span><strong id="now-making">허브</strong><span data-i18n="cap_post">를 만들고 있습니다.</span> <span id="countdown">금요일 저녁에 공개합니다.</span></figcaption>
       </figure>
     </section>
 
     <section id="tools" class="tools" aria-labelledby="tools-title">
-      <h2 id="tools-title">지금까지 낸 도구</h2>
+      <h2 id="tools-title" data-i18n="tools_title">지금까지 낸 도구</h2>
       <ol class="log" id="log">
-        <li class="empty">도구 목록을 불러오는 중입니다.</li>
+        <li class="empty" data-i18n="loading">도구 목록을 불러오는 중입니다.</li>
       </ol>
       <noscript><p>도구 목록은 자바스크립트로 그립니다. <a href="tools.json">목록 원본(tools.json)</a>을 직접 볼 수 있습니다.</p></noscript>
     </section>
 
     <section class="how" aria-labelledby="how-title">
-      <h2 id="how-title">이렇게 만듭니다</h2>
-      <p>한 주에 하나씩, 서버 없이 브라우저에서 돌아가는 도구를 만듭니다. 대부분의 구현은 AI가 맡고, 무엇을 만들지와 출시 판단은 사람이 합니다.</p>
-      <p>완벽해질 때까지 기다리지 않습니다. 대신 도구마다 <em>무엇이 안 되는지</em>를 먼저 적어 둡니다.</p>
+      <h2 id="how-title" data-i18n="how_title">이렇게 만듭니다</h2>
+      <p data-i18n="how1">한 주에 하나씩, 서버 없이 브라우저에서 돌아가는 도구를 만듭니다. 대부분의 구현은 AI가 맡고, 무엇을 만들지와 출시 판단은 사람이 합니다.</p>
+      <p><span data-i18n="how2a">완벽해질 때까지 기다리지 않습니다. 대신 도구마다 </span><em data-i18n="how2em">무엇이 안 되는지</em><span data-i18n="how2b">를 먼저 적어 둡니다.</span></p>
     </section>
   </main>
 
   <footer class="foot">
     <ul class="links">
-      <li><a href="https://app.notion.com/p/3f392c340bb181cd9d1cc0c646e40398">만든 기록 보기 (노션 진열장)</a></li>
-      <li><a href="https://realoil.notion.site/7ed477dffe6746de9c07e983cb66922e">의견 남기기</a></li>
+      <li><a href="https://app.notion.com/p/3f392c340bb181cd9d1cc0c646e40398" data-i18n="log_link">만든 기록 보기</a></li>
+      <li><a href="https://realoil.notion.site/7ed477dffe6746de9c07e983cb66922e" data-i18n="feedback">의견 남기기</a></li>
       <li><a href="https://github.com/tinyfriday">GitHub</a></li>
     </ul>
-    <p class="meta">만든 사람 계달희. 이 페이지는 허브 v0.1(실험적)입니다. <a href="https://github.com/tinyfriday/tinyfriday.github.io#알려진-한계">알려진 한계 보기</a></p>
-    <p class="meta">방문 수는 GoatCounter로 셉니다. 쿠키를 쓰지 않고, 누구인지 알 수 있는 정보는 모으지 않습니다.</p>
+    <p class="meta"><span data-i18n="meta1">만든 사람 계달희. 이 페이지는 허브 v0.1(실험적)입니다.</span> <a href="https://github.com/tinyfriday/tinyfriday.github.io#알려진-한계" data-i18n="limits">알려진 한계 보기</a></p>
+    <p class="meta" data-i18n="privacy">방문 수는 GoatCounter로 셉니다. 쿠키를 쓰지 않고, 누구인지 알 수 있는 정보는 모으지 않습니다.</p>
   </footer>
 </body>
 </html>

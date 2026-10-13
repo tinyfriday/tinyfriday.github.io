@@ -3,7 +3,8 @@
     "name": "허브",
     "summary": "배포해봄의 모든 도구를 한곳에 모으는 이 페이지",
     "start": "2026-10-10",
-    "release": "2026-10-16"
+    "release": "2026-10-16",
+    "name_en": "the hub"
   },
   "tools": [
     {
@@ -17,9 +18,13 @@
       "links": [
         {
           "label": "소스 보기",
-          "href": "https://github.com/tinyfriday/tinyfriday.github.io"
+          "href": "https://github.com/tinyfriday/tinyfriday.github.io",
+          "label_en": "Source"
         }
-      ]
+      ],
+      "name_en": "배포해봄 Hub",
+      "status_en": "experimental",
+      "summary_en": "This page: every tool shipped so far in one place."
     },
     {
       "id": "mid2mml",
@@ -29,7 +34,10 @@
       "released": "2026-10-09",
       "version": "v0.8.0",
       "status": "지인용 알파",
-      "links": []
+      "links": [],
+      "name_en": "MML Converter",
+      "status_en": "friends-only alpha",
+      "summary_en": "Turns audio into MML sheet music for Mabinogi ensemble play. It is an alpha shared only with friends, so the app address is not public. I am improving it from their feedback; the source opens after that."
     }
   ]
 }

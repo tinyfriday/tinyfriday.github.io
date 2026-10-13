@@ -133,3 +133,13 @@ h2 { font-size: 1.375rem; font-weight: 800; letter-spacing: -0.01em; margin: 0 0
   .days .today::after { animation: draw .6s ease-out both; }
   @keyframes draw { from { opacity: 0; transform: scale(.6); } to { opacity: 1; transform: none; } }
 }
+
+/* 언어 전환 */
+.top-right { display: flex; align-items: baseline; gap: .75rem; }
+.lang {
+  font: inherit; font-size: .8125rem; font-weight: 700; letter-spacing: .02em;
+  color: var(--ink); background: var(--paper);
+  border: 1.5px solid var(--ink); border-radius: 3px;
+  padding: .1rem .45rem; cursor: pointer;
+}
+.lang:hover { background: var(--marker); color: #1B2A4A; }
