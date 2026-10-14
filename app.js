@@ -20,7 +20,7 @@
       log_link: "Build Log", feedback: "의견 남기기",
       brand: "배포해봄",
       soon: "공개 예정 ", left: "공개까지 {n}일 남았어요.", tomorrow: "내일 저녁에 공개해요.",
-      today: "오늘 저녁에 공개해요.", shipped: "{d}에 공개했어요.",
+      today: "오늘 공개했어요.", shipped: "{d}에 공개했어요.",
       empty: "아직 낸 도구가 없어요. 첫 도구는 금요일에 나와요.",
       fail: "달희가 도구 목록을 못 찾았어요. 새로고침하거나 ", fail_link: "목록 원본", fail_end: "을 열어 보세요.",
       switch_to: "Switch to English", switch_label: "EN"
@@ -41,7 +41,7 @@
       log_link: "Build Log", feedback: "Send feedback",
       brand: "TinyFriday",
       soon: "Coming ", left: "Ships in {n} days.", tomorrow: "Ships tomorrow evening.",
-      today: "Ships this evening.", shipped: "Shipped on {d}.",
+      today: "Shipped today.", shipped: "Shipped on {d}.",
       empty: "Nothing shipped yet. The first tool lands on Friday.",
       fail: "Dalhee couldn't find the tool list. Refresh, or open the ", fail_link: "raw list", fail_end: ".",
       switch_to: "한국어로 보기", switch_label: "KO"
@@ -141,7 +141,7 @@
     p.textContent = "";
     if (!d || !d.series_start || !d.sprint) return;
     var s = d.series_start.split("-").map(Number), r = d.sprint.release.split("-").map(Number);
-    var n = Math.floor((Date.UTC(r[0], r[1] - 1, r[2]) - Date.UTC(s[0], s[1] - 1, s[2])) / 604800000) + 1;
+    var n = Math.ceil((Date.UTC(r[0], r[1] - 1, r[2]) - Date.UTC(s[0], s[1] - 1, s[2])) / 604800000) + 1;
     var now = todayIso();
     var k = (d.tools || []).filter(function (t) { return t.released <= now; }).length;
     p.appendChild(el("span", "stat", T("stat_friday").replace("{n}", n)));
